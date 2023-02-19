@@ -24,3 +24,8 @@ sytax:
         return your response
 
 WHEN YOU HAVE API WITH PATH PARAMETERS, MAKE SURE TO ADD THIS IN THE END OTHERWISE IT WILL CREATE ERROR.
+
+enumeration with path paramters:
+    This is used when we want user to enter only specific set of values from drop down menu. Follow enumPathParam.py file from BooksProject folder for demo.
+
+TO USE BOTH QUERY AND PATH PARAMETERS IN A SINGLE API, FIRST GIVE QUERY PARAM AND THEN GIVE PATH PARAM.
