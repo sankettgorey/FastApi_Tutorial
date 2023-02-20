@@ -32,5 +32,5 @@ async def pathParam(bookTitle: str):
 
 
 @app.get('/intParam/{bookTitle}')
-async def intParam(bookTitle: int):
-    return {'bookTitle': bookTitle}
+async def intParam(id: int, bookTitle: str):
+    return {'bookTitle': bookTitle, 'id': id}
