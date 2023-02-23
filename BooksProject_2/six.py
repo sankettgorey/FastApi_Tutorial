@@ -1,17 +1,8 @@
-'''
-here custom function is created to append books into the BOOKS list and its called 
-using get method API. So, when the API is called, it will automatically append books 
-into the books list and new books will be created and appended in the books list
-'''
-
-
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
 from typing import Optional
+from pydantic import BaseModel, Field
 from uuid import UUID
 
-
-BOOKS = []
 
 app = FastAPI()
 
@@ -19,31 +10,12 @@ app = FastAPI()
 class Book(BaseModel):
     id: UUID
     title: str = Field(min_length=1)
-    author: str = Field(min_length=1, max_length=100)
-    description: str = Field(title='additional info of the book',
-                             min_length=1,
-                             max_length=100)
-    rating: int = Field(gt=-1,
-                        lt=11)
+    author: str = Field(min_length=1)
+    description: str = Field(min_length=1)
+    rating: int = Field(gt=-1, lt=11)
 
 
-@app.get('/createBook')
-async def books():
-    if len(BOOKS) < 1:
-        createBook()
-    return BOOKS
-
-
-@app.get('/')
-async def getBook():
-    return BOOKS
-
-
-@app.post('/createBook')
-async def createBook(book: Book):
-    BOOKS.append(book)
-
-    return book
+BOOKS = []
 
 
 def createBook():
@@ -75,3 +47,26 @@ def createBook():
     BOOKS.append(book2)
     BOOKS.append(book3)
     BOOKS.append(book4)
+
+
+@app.get('/')
+async def getAllBooks(booksToReturn: Optional[int] = None):
+    if len(BOOKS) < 1:
+        createBook()
+    return BOOKS
+
+
+@app.get('/return')
+async def getBooks():
+    return BOOKS
+
+
+@app.put('/update/{bookId}')
+async def update(bookId: UUID, book: Book):
+    counter = 0
+    for b in BOOKS:
+        # counter += 1
+        if b.id == bookId:
+            BOOKS[counter] = book
+            counter += 1
+        return BOOKS[counter - 1]
