@@ -1,14 +1,34 @@
 from fastapi import FastAPI
 import uvicorn
 
+app = FastAPI(summary='# this is the app for query param demo',
+              description='multiple query param')
 
-app = FastAPI()
 
-
-@app.get('/users', description='gives the info of user based on name')
+# combinaation of both path param and query param
+@app.get('/users/{user_id}')
 async def get_user(name: str = None):
 
-    return {'name': name}
+    if name:
+
+        return {
+            # 'user_id': user_id,
+            'name': name,
+            'total_expense': 12000
+        }
+
+    return {
+        'user_id': 4,
+        'name': None,
+        'total_expense': None
+    }
+
+
+
+# query param with default value
+@app.get('/products')
+async def products(limit: int = 10, name: str = None, ):
+    return {'products': limit}
 
 
 
