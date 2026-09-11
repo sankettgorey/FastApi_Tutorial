@@ -14,13 +14,9 @@ import uvicorn
 app = FastAPI()
 
 @app.get("/users/{user_id}", description="gives user details based on user id")
-async def get_user(user_id: int, name: str = None):
+async def get_user(user_id: int):
 
-    return {
-        'user_id': user_id,
-        'name': name,
-        "total_expense": 12345
-    }
+    return {'user_id': user_id,}
 
 
 
