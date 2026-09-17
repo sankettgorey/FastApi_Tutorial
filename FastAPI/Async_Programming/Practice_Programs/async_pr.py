@@ -1,39 +1,31 @@
 import asyncio
-import time
 
-
-async def get_user():
-
-    await asyncio.sleep(2)
-
-    return 'user_data'
-
-
-async def get_orders():
+async def task1():
 
     await asyncio.sleep(3)
 
-    return 'get_orders'
+    return 'task1 completed'
 
 
-async def get_notifications():
+async def task2():
 
     await asyncio.sleep(1)
 
-    return 'notifications_data'
+    return 'task2 completed'
+
 
 
 async def main():
 
+    tasks = [
+        asyncio.create_task(task1()),
+        asyncio.create_task(task2())
+    ]
 
-    user, order, notification = await asyncio.gather(
-        get_user(),
-        get_orders(),
-        get_notifications()
-    )
+    for task in asyncio.as_completed(tasks):
 
-    return user, order, notification
+        result = await task
 
+        print(result)
 
-x = asyncio.run(main())
-print(x)
+asyncio.run(main())
