@@ -24,8 +24,12 @@ async def main():
 
     for task in asyncio.as_completed(tasks):
 
-        result = await task
+        try:
+            result = await task
 
-        print(result)
+            print(result)
+
+        except Exception as e:
+            print(str(e))
 
 asyncio.run(main())
